@@ -1,0 +1,135 @@
+html,
+body {
+    margin: 0;
+    font-family: helvetica, 微软雅黑, 'microsoft yahei', verdana, lucida, arial, sans-serif, 黑体;
+    padding: 0;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+// span {
+//     display: inline-block;
+//     vertical-align: top;
+//     overflow: hidden;
+//     // border: 1px solid blue;
+// }
+.blur {
+    $blurvalue: 0.8px;
+    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+    -webkit-filter: blur($blurvalue); /* Chrome, Opera */
+       -moz-filter: blur($blurvalue);
+        -ms-filter: blur($blurvalue);
+            filter: blur($blurvalue);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=0.8, MakeShadow=false); /* IE6~IE9 */
+    &:hover {
+        filter: none;
+    }
+}
+
+.container {
+    $headerHeight: 60px;
+    height: 100%;
+    position: relative;
+    .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: $headerHeight;
+        // line-height: $headerHeight;
+        box-shadow: 0 0 5px 2px #bbb;
+        font-size: 14px;
+        .title {
+            float: left;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0;
+            text-indent: 1em;
+            cursor: default;
+            color: #666;
+            line-height: $headerHeight;
+            letter-spacing: 2px;
+        }
+        .weather {
+            float: right;
+            display: none;
+            // line-height: $headerHeight;
+            margin: 0;
+            margin-right: 20px;
+        }
+        .weather span {
+            margin: 0 10px;
+        }
+        .func {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            float: right;
+            height: 100%;
+            // position: absolute;
+            // right: 20px;
+        }
+        .func li {
+            // float: left;
+            display: inline-block;
+            height: 100%;
+            margin-right: 20px;
+            cursor: pointer;
+            &:hover {
+                color: #09f;
+            }
+        }
+        .func li:before {
+            content: "";
+            height: 100%;
+            width: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    .content {
+        height: 100%;
+        padding-top: $headerHeight;
+        $leftValue: 50%;
+        .left,
+        .right {
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            word-break: break-all;
+            word-wrap: break-word;
+            min-width: 50px;
+            line-height: 1.2em;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace, 'Courier New', 'Helvetica Neue', Helvetica, Arial, sans-serif, 微软雅黑, 黑体;
+        }
+        .left {
+            float: left;
+            font-size: 0;
+            width: $leftValue;
+            textarea {
+                width: 100%;
+                height: 100%;
+                resize: none;
+                outline: 0 none;
+                border: 0 none;
+                padding: 20px;
+                font-size: 16px;
+                font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace, 'Courier New', 'Helvetica Neue', Helvetica, Arial, sans-serif, 微软雅黑, 黑体;
+            }
+        }
+        .divider {
+            width: 5px;
+            height: 100%;
+            background-color: #aaa;
+            opacity: 0.8;
+            cursor: e-resize;
+            float: left;
+        }
+        .right {
+            padding: 20px;
+        }
+    }
+}

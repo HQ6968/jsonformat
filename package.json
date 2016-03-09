@@ -1,0 +1,39 @@
+{
+  "name": "jsonformat",
+  "version": "1.0.0",
+  "description": "format json to beautiful html",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "json",
+    "format",
+    "html"
+  ],
+  "author": "tingyuan",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.1",
+    "gulp-add-src": "^0.2.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.1",
+    "gulp-exit": "0.0.2",
+    "gulp-filter": "^4.0.0",
+    "gulp-htmlmin": "^1.3.0",
+    "gulp-ignore": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.2.0",
+    "gulp-sequence": "^0.4.5",
+    "gulp-uglify": "^1.5.3"
+  },
+  "dependencies": {
+    "browser-filesaver": "^1.1.0",
+    "clipboard": "^1.5.9",
+    "jsonlint": "^1.6.2"
+  }
+}
