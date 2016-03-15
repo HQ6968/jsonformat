@@ -10,6 +10,8 @@
     var jsonResult = $("#json_result");
     var currentValue; // 表示当前的值
     var lastValue = ""; //表示上一次的值
+    var checkInput = null; // 监听输入的interval
+
     if (!String.prototype.trim) {
         String.prototype.trim = function() {
             return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
@@ -32,13 +34,31 @@
         }
     };
 
-    setInterval(function() {
+    jsonContent.focus();
+    checkInput = setInterval(function() {
         currentValue = jsonContent.value.trim();
         if (lastValue !== currentValue) {
             lastValue = currentValue;
             jsonResult.innerHTML = format(currentValue);
         }
-    }, 13);
+    }, 100);
+
+    addEvent(jsonContent, 'focus', function() {
+        if (!!checkInput) {
+            return;
+        }
+        checkInput = setInterval(function() {
+            currentValue = jsonContent.value.trim();
+            if (lastValue !== currentValue) {
+                lastValue = currentValue;
+                jsonResult.innerHTML = format(currentValue);
+            }
+        }, 100);
+    });
+    addEvent(jsonContent, 'blur', function() {
+        checkInput && clearInterval(checkInput);
+        checkInput = null;
+    });
 
     new Clipboard('#copy', {
         target: function(trigger) {
@@ -61,7 +81,6 @@
         result.scrollTop = result.scrollHeight * scale;
     });
 
-
     addEvent($(".divider")[0], "mousedown", function(e) {
         document.body.onmousemove = function(e) {
             var windowWidth = getViewportSize().width;
@@ -82,10 +101,7 @@
     });
 
     addEvent($("#compress"), "click", function() {
-        if (success) {
-            var result = JSON.stringify(JSON.parse($("#json_content").value));
-            jsonResult.innerHTML = result;
-        }
+        success && (jsonResult.innerHTML = JSON.stringify(JSON.parse($("#json_content").value)));
     });
 
     addEvent($("#format"), "click", function() {
