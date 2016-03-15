@@ -10,12 +10,6 @@ body {
     box-sizing: border-box;
 }
 
-// span {
-//     display: inline-block;
-//     vertical-align: top;
-//     overflow: hidden;
-//     // border: 1px solid blue;
-// }
 .blur {
     $blurvalue: 0.8px;
     filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
@@ -28,7 +22,17 @@ body {
         filter: none;
     }
 }
-
+.toast {
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #09f;
+    color: white;
+    line-height: 1.6em;
+    position: fixed;
+    bottom: 40px;
+    display: none;
+    // 水平居中用js控制
+}
 .container {
     $headerHeight: 60px;
     height: 100%;

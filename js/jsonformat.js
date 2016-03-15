@@ -41,43 +41,6 @@ function formatJson(jsonObj, indent) {
                 objcontent.style.display = "inline";
                 target.className = "btn-open";
             }
-
-
-            // if (objcontent.style.display !== "none") {
-
-            //     height = size.height;
-            //     pervalue = height * 10 / time;
-
-            //     anima = setInterval(function() {
-            //         if (height <= pervalue) {
-            //             objcontent.style.display = "none";
-            //             objcontent.style.height = size.height + "px";
-            //             target.className = "btn-close";
-            //             target.innerHTML = typeInfo[objcontent.className];
-            //             clearInterval(anima);
-            //             return;
-            //         }
-            //         height -= pervalue;
-            //         objcontent.style.height = height + "px";
-            //     }, 10);
-
-            // } else {
-            //     height = objcontent.style.height = 0;
-            //     objcontent.style.display = "inline-block";
-            //     pervalue = size.height * 10 / time;
-            //     target.innerHTML = "";
-            //     target.className = "btn-open";
-            //     anima = setInterval(function() {
-            //         if (height >= size.height) {
-            //             objcontent.style.height = size.height + "px";
-
-            //             clearInterval(anima);
-            //             return;
-            //         }
-            //         height += pervalue;
-            //         objcontent.style.height = height + "px";
-            //     }, 10);
-            // }
         };
 
         function getElementSize(element, type) {
