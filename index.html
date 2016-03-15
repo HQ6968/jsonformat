@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_cn">
 
 <head>
     <meta charset="UTF-8">
@@ -25,13 +25,7 @@
                 <li id="format">格式化</li>
                 <li id="compress">压缩</li>
             </ul>
-            <p class="weather">
-                <span id="city"></span>
-                <span id="dawn"></span>
-                <span id="day"></span>
-                <span id="night"></span>
-                <span id="pm25"></span>
-            </p>
+
         </div>
         <div class="content">
             <div class="left">
@@ -52,58 +46,7 @@
     <script src="js/jsonformat.js"></script>
     <script src="js/index.js"></script>
     <!-- replace-end-js -->
-    <script>
-    (function() {
-        var test = {
-            name: "tingyuan",
-            age: 23,
-            papapa: null,
-            lover: {
-                name: "ningzi",
-                age: [18, "23", 343],
-                good: false
-            },
-            test: {
-                a: "aaa",
-                b: ["b", 12, false, "bb", {
-                    bbb: "bbbb",
-                    bbbb: 1234,
-                    bbbbb: {
-                        age: 23,
-                        name: "ty"
-                    },
-                    bqbq: {
-                        ds: [234, "dfd", [1, 2, 3], 34, {}],
-                        bbb: "bbbb",
-                        bbbb: 1234,
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        lala: "e5"
-                    }
-                }],
-                c: {
-                    cc: "ccc",
-                    ccc: [1, 2, 3, {
-                        motto: "try every thing",
-                        age: 25
-                    }, 4, "cccc", "1234"]
-                }
-            },
-            last: "yes"
-        };
-        console.log(JSON.stringify(test));
-    })();
-    </script>
+
 </body>
 
 </html>

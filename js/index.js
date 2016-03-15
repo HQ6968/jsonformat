@@ -117,33 +117,4 @@
         }
     });
 
-    // (function(callback) {
-    //     window.getCityCode = window.getCityCode || function(content) {
-    //         if (typeof callback === "function") {
-    //             callback(content);
-    //         }
-    //     };
-    //     loadScript("http://weather.hao.360.cn/sed_api_weather_info.php?_jsonp=getCityCode&_=" + (new Date()).getTime());
-    // })(function(data) {
-    //     var city = data.area[2][0];
-    //     var dawn_weather = data.weather[1].info.dawn[1];
-    //     var dawn_temperature = data.weather[1].info.dawn[2]; //℃
-    //     var day_weather = data.weather[1].info.day[1];
-    //     var day_temperature = data.weather[1].info.day[2]; //℃
-    //     var night_weather = data.weather[1].info.night[1];
-    //     var night_temperature = data.weather[1].info.night[2]; //℃
-    //     $("#city").innerHTML = city;
-    //     $("#dawn").innerHTML = "拂晓 " + dawn_weather + " " + dawn_temperature + "℃";
-    //     $("#day").innerHTML = "白日 " + day_weather + " " + day_temperature + "℃";
-    //     $("#night").innerHTML = "夜晚 " + night_weather + " " + night_temperature + "℃";
-    //     $("#pm25").innerHTML = "pm2.5: " + data.pm25.pm25[0];
-    //     var scripts = $("script");
-    //     for (var i = 0; i < scripts.length; i++) {
-    //         if (scripts[i].src.indexOf("weather.hao.360.cn") >= 0) {
-    //             scripts[i].parentNode.removeChild(scripts[i]);
-    //             break;
-    //         }
-    //     }
-    // });
-
 })();
