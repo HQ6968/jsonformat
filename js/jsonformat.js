@@ -128,6 +128,11 @@ function formatJson(jsonObj, indent) {
         return arr + spacestr + "]" + _comma + "</span>";
     }
 
+    function isUrl(url) {
+        var urlReg = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
+        return urlReg.test(url);
+    }
+
     /**
      * 对json属性对应的值进行转换
      * @param  {T} value     json规定的合法的值
@@ -146,7 +151,7 @@ function formatJson(jsonObj, indent) {
         switch (type) {
             case "String":
                 value = value.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-                if (/^http(s)?:\/\/[\s\S]+/.test(value)) {
+                if (isUrl(value)) {
                     value = '<a href="' + value + '" target="_blank">' + value + '</a>';
                 }
                 return '<span class="json_string">"' + value + '"</span>' + _comma;
