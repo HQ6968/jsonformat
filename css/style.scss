@@ -12,16 +12,20 @@ body {
 
 .blur {
     $blurvalue: 0.8px;
-    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
-    -webkit-filter: blur($blurvalue); /* Chrome, Opera */
-       -moz-filter: blur($blurvalue);
-        -ms-filter: blur($blurvalue);
-            filter: blur($blurvalue);
-    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=0.8, MakeShadow=false); /* IE6~IE9 */
+    filter: url(blur.svg#blur);
+    /* FireFox, Chrome, Opera */
+    -webkit-filter: blur($blurvalue);
+    /* Chrome, Opera */
+    -moz-filter: blur($blurvalue);
+    -ms-filter: blur($blurvalue);
+    filter: blur($blurvalue);
+    //filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius=0.8, MakeShadow=false);
+    /* IE6~IE9 */
     &:hover {
         filter: none;
     }
 }
+
 .toast {
     border-radius: 5px;
     padding: 10px 20px;
@@ -31,8 +35,12 @@ body {
     position: fixed;
     bottom: 40px;
     display: none;
+    left: 50%;
+
+    /* Safari */
     // 水平居中用js控制
 }
+
 .container {
     $headerHeight: 60px;
     height: 100%;
@@ -57,13 +65,13 @@ body {
             line-height: $headerHeight;
             letter-spacing: 2px;
         }
-
         .func {
             list-style: none;
             padding: 0;
             margin: 0;
             float: right;
             height: 100%;
+            color: #555;
             // position: absolute;
             // right: 20px;
         }
@@ -88,7 +96,7 @@ body {
     .content {
         height: 100%;
         padding-top: $headerHeight;
-        $leftValue: 50%;
+        $leftValue: 38.2%;
         .left,
         .right {
             height: 100%;

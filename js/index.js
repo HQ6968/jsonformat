@@ -70,15 +70,15 @@
         toast.style.display = "block";
         setTimeout(function() {
             toast.style.display = "none";
-        }, 3000);
+        }, 2000);
         e.clearSelection();
     }).on('error', function(e) {
         var toast = $("#toastInfo");
-        toast.innerHTML = "复制失败";
+        toast.innerHTML = "复制失败" + e;
         toast.style.display = "block";
         setTimeout(function() {
             toast.style.display = "none";
-        }, 3000);
+        }, 2000);
     });
 
     addEvent(jsonContent, "scroll", function(e) {
