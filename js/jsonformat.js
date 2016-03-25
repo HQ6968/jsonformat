@@ -148,10 +148,12 @@ function formatJson(jsonObj, indent) {
             _comma = ",";
         }
         var type = toString.call(value).replace(/^\[object ([a-zA-Z]+)\]$/, "$1");
+        var checkProtocol;
         switch (type) {
             case "String":
                 value = value.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-                if (isUrl(value)) {
+                checkProtocol = value.toLowerCase()
+                if (isUrl(value) && (checkProtocol.indexOf('http://') === 0 || checkProtocol.indexOf('https://') === 0)) {
                     value = '<a href="' + value + '" target="_blank">' + value + '</a>';
                 }
                 return '<span class="json_string">"' + value + '"</span>' + _comma;
