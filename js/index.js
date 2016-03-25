@@ -65,12 +65,14 @@
             return jsonResult;
         }
     }).on('success', function(e) {
-        var toast = $("#toastInfo");
-        toast.innerHTML = "复制成功";
-        toast.style.display = "block";
-        setTimeout(function() {
-            toast.style.display = "none";
-        }, 2000);
+        if (jsonResult.innerHTML.length > 0) {
+            var toast = $("#toastInfo");
+            toast.innerHTML = "复制成功";
+            toast.style.display = "block";
+            setTimeout(function() {
+                toast.style.display = "none";
+            }, 2000);
+        }
         e.clearSelection();
     }).on('error', function(e) {
         var toast = $("#toastInfo");

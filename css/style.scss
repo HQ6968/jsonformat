@@ -51,7 +51,6 @@ body {
         left: 0;
         width: 100%;
         height: $headerHeight;
-        // line-height: $headerHeight;
         box-shadow: 0 0 5px 2px #bbb;
         font-size: 14px;
         .title {
@@ -69,14 +68,12 @@ body {
             list-style: none;
             padding: 0;
             margin: 0;
+            margin-right: 20px;
             float: right;
             height: 100%;
             color: #555;
-            // position: absolute;
-            // right: 20px;
         }
         .func li {
-            // float: left;
             display: inline-block;
             height: 100%;
             margin-right: 20px;
