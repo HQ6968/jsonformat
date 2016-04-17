@@ -10,23 +10,35 @@ body {
     box-sizing: border-box;
 }
 
-// span {
-//     display: inline-block;
-//     vertical-align: top;
-//     overflow: hidden;
-//     // border: 1px solid blue;
-// }
 .blur {
     $blurvalue: 0.8px;
-    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
-    -webkit-filter: blur($blurvalue); /* Chrome, Opera */
-       -moz-filter: blur($blurvalue);
-        -ms-filter: blur($blurvalue);
-            filter: blur($blurvalue);
-    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=0.8, MakeShadow=false); /* IE6~IE9 */
+    filter: url(blur.svg#blur);
+    /* FireFox, Chrome, Opera */
+    -webkit-filter: blur($blurvalue);
+    /* Chrome, Opera */
+    -moz-filter: blur($blurvalue);
+    -ms-filter: blur($blurvalue);
+    filter: blur($blurvalue);
+    //filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius=0.8, MakeShadow=false);
+    /* IE6~IE9 */
     &:hover {
         filter: none;
     }
+}
+
+.toast {
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #09f;
+    color: white;
+    line-height: 1.6em;
+    position: fixed;
+    bottom: 40px;
+    display: none;
+    left: 50%;
+
+    /* Safari */
+    // 水平居中用js控制
 }
 
 .container {
@@ -39,7 +51,6 @@ body {
         left: 0;
         width: 100%;
         height: $headerHeight;
-        // line-height: $headerHeight;
         box-shadow: 0 0 5px 2px #bbb;
         font-size: 14px;
         .title {
@@ -53,27 +64,16 @@ body {
             line-height: $headerHeight;
             letter-spacing: 2px;
         }
-        .weather {
-            float: right;
-            display: none;
-            // line-height: $headerHeight;
-            margin: 0;
-            margin-right: 20px;
-        }
-        .weather span {
-            margin: 0 10px;
-        }
         .func {
             list-style: none;
             padding: 0;
             margin: 0;
+            margin-right: 20px;
             float: right;
             height: 100%;
-            // position: absolute;
-            // right: 20px;
+            color: #555;
         }
         .func li {
-            // float: left;
             display: inline-block;
             height: 100%;
             margin-right: 20px;

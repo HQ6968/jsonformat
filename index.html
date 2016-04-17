@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
-
 <head>
     <meta charset="UTF-8">
     <title>JSON解析</title>
@@ -46,6 +45,7 @@
                 <div id="json_result"></div>
             </div>
         </div>
+        <div id="toastInfo" class="toast"></div>
     </div>
     <!-- replace-start-js -->
     <script src="js/dep/jsonlint.js"></script>
@@ -56,58 +56,7 @@
     <script src="js/jsonformat.js"></script>
     <script src="js/index.js"></script>
     <!-- replace-end-js -->
-    <script>
-    (function() {
-        var test = {
-            name: "tingyuan",
-            age: 23,
-            papapa: null,
-            lover: {
-                name: "ningzi",
-                age: [18, "23", 343],
-                good: false
-            },
-            test: {
-                a: "aaa",
-                b: ["b", 12, false, "bb", {
-                    bbb: "bbbb",
-                    bbbb: 1234,
-                    bbbbb: {
-                        age: 23,
-                        name: "ty"
-                    },
-                    bqbq: {
-                        ds: [234, "dfd", [1, 2, 3], 34, {}],
-                        bbb: "bbbb",
-                        bbbb: 1234,
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        bbbbb: {
-                            age: 23,
-                            name: "ty"
-                        },
-                        lala: "e5"
-                    }
-                }],
-                c: {
-                    cc: "ccc",
-                    ccc: [1, 2, 3, {
-                        motto: "try every thing",
-                        age: 25
-                    }, 4, "cccc", "1234"]
-                }
-            },
-            last: "yes"
-        };
-        console.log(JSON.stringify(test));
-    })();
-    </script>
+
 </body>
 
 </html>

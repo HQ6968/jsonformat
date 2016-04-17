@@ -41,43 +41,6 @@ function formatJson(jsonObj, indent) {
                 objcontent.style.display = "inline";
                 target.className = "btn-open";
             }
-
-
-            // if (objcontent.style.display !== "none") {
-
-            //     height = size.height;
-            //     pervalue = height * 10 / time;
-
-            //     anima = setInterval(function() {
-            //         if (height <= pervalue) {
-            //             objcontent.style.display = "none";
-            //             objcontent.style.height = size.height + "px";
-            //             target.className = "btn-close";
-            //             target.innerHTML = typeInfo[objcontent.className];
-            //             clearInterval(anima);
-            //             return;
-            //         }
-            //         height -= pervalue;
-            //         objcontent.style.height = height + "px";
-            //     }, 10);
-
-            // } else {
-            //     height = objcontent.style.height = 0;
-            //     objcontent.style.display = "inline-block";
-            //     pervalue = size.height * 10 / time;
-            //     target.innerHTML = "";
-            //     target.className = "btn-open";
-            //     anima = setInterval(function() {
-            //         if (height >= size.height) {
-            //             objcontent.style.height = size.height + "px";
-
-            //             clearInterval(anima);
-            //             return;
-            //         }
-            //         height += pervalue;
-            //         objcontent.style.height = height + "px";
-            //     }, 10);
-            // }
         };
 
         function getElementSize(element, type) {
@@ -165,6 +128,11 @@ function formatJson(jsonObj, indent) {
         return arr + spacestr + "]" + _comma + "</span>";
     }
 
+    function isUrl(url) {
+        var urlReg = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/i;
+        return urlReg.test(url);
+    }
+
     /**
      * 对json属性对应的值进行转换
      * @param  {T} value     json规定的合法的值
@@ -180,10 +148,12 @@ function formatJson(jsonObj, indent) {
             _comma = ",";
         }
         var type = toString.call(value).replace(/^\[object ([a-zA-Z]+)\]$/, "$1");
+        var checkProtocol;
         switch (type) {
             case "String":
                 value = value.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-                if (/^http(s)?:\/\/[\s\S]+/.test(value)) {
+                checkProtocol = value.toLowerCase()
+                if (isUrl(value) && (checkProtocol.indexOf('http://') === 0 || checkProtocol.indexOf('https://') === 0)) {
                     value = '<a href="' + value + '" target="_blank">' + value + '</a>';
                 }
                 return '<span class="json_string">"' + value + '"</span>' + _comma;
