@@ -61,7 +61,6 @@
         result.scrollTop = result.scrollHeight * scale;
     });
 
-
     addEvent($(".divider")[0], "mousedown", function(e) {
         document.body.onmousemove = function(e) {
             var windowWidth = getViewportSize().width;
@@ -71,34 +70,55 @@
         };
     });
 
+    addEvent($('.func')[0], 'click', function(e) {
+        var e = e || window.event;
+        var target = e.target || e.srcElement;
+        switch (target.id) {
+            case 'clear':
+                jsonContent.value = "";
+                jsonContent.focus();
+                jsonResult.innerHTML = "";
+                break;
+            case 'compress':
+                if (success) {
+                    var result = JSON.stringify(JSON.parse($("#json_content").value));
+                    jsonResult.innerHTML = result;
+                }
+                break;
+            case 'format':
+                jsonResult.innerHTML = format(jsonContent.value);
+                break;
+            case 'save':
+                if (success) {
+                    var result = JSON.stringify(JSON.parse(jsonContent.value), null, 4);
+                    saveAs(new Blob([result], {
+                        type: "text/plain;charset=utf-8"
+                    }), "json_format.json");
+                }
+                break;
+            case 'import':
+                $('#import_input').click();
+                break;
+        }
+    });
+
     addEvent(document.body, "mouseup", function() {
         document.body.onmousemove = null;
     });
 
-    addEvent($("#clear"), "click", function() {
-        jsonContent.value = "";
-        jsonContent.focus();
-        jsonResult.innerHTML = "";
-    });
-
-    addEvent($("#compress"), "click", function() {
-        if (success) {
-            var result = JSON.stringify(JSON.parse($("#json_content").value));
-            jsonResult.innerHTML = result;
+    addEvent($('#import_input'), 'change', function(e) {
+        if (typeof FileReader === 'undefined') {
+            alert("抱歉，您的浏览器不支持导入，请升级");
+            return false;
         }
-    });
-
-    addEvent($("#format"), "click", function() {
-        jsonResult.innerHTML = format(jsonContent.value);
-    });
-
-    addEvent($("#save"), "click", function() {
-        if (success) {
-            var result = JSON.stringify(JSON.parse(jsonContent.value), null, 4);
-            saveAs(new Blob([result], {
-                type: "text/plain;charset=utf-8"
-            }), "json_format.json");
-        }
+        var reader = new FileReader();
+        console.log(e);
+        reader.readAsText($('#import_input').files[0]);
+        reader.onload = function() {
+            var content = this.result.trim();
+            currentValue = jsonContent.value = content;
+            jsonResult.innerHTML = format(currentValue);
+        };
     });
 
     // (function(callback) {
