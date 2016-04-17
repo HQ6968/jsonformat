@@ -2,7 +2,7 @@
   "name": "jsonformat",
   "version": "1.0.0",
   "description": "format json to beautiful html",
-  "main": "index.html",
+  "main": "js/jsonformat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
