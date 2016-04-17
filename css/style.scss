@@ -33,12 +33,19 @@ body {
     color: white;
     line-height: 1.6em;
     position: fixed;
-    bottom: 40px;
-    display: none;
     left: 50%;
+    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transition: bottom .5s, opacity .5s;
+    -webkit-transition: bottom .5s, opacity .5s;
+    bottom: -100px;
+    opacity: 0;
+}
 
-    /* Safari */
-    // 水平居中用js控制
+.toast__show {
+    bottom: 40px;
+    opacity: 0.9;
 }
 
 .container {

@@ -60,27 +60,33 @@
         checkInput = null;
     });
 
-    new Clipboard('#copy', {
+    var theClipboard = new Clipboard('#copy', {
         target: function(trigger) {
             return jsonResult;
         }
     }).on('success', function(e) {
-        if (jsonResult.innerHTML.length > 0) {
+        if (jsonResult.innerHTML.length > 0 && !theClipboard.isAnimating) {
             var toast = $("#toastInfo");
             toast.innerHTML = "复制成功";
-            toast.style.display = "block";
+            toast.className = 'toast toast__show';
+            theClipboard.isAnimating = true;
             setTimeout(function() {
-                toast.style.display = "none";
-            }, 2000);
+                toast.className = 'toast';
+                theClipboard.isAnimating = false;
+            }, 1800);
         }
         e.clearSelection();
     }).on('error', function(e) {
-        var toast = $("#toastInfo");
-        toast.innerHTML = "复制失败" + e;
-        toast.style.display = "block";
-        setTimeout(function() {
-            toast.style.display = "none";
-        }, 2000);
+        if (!theClipboard.isAnimating) {
+            theClipboard.isAnimating = true;
+            var toast = $("#toastInfo");
+            toast.innerHTML = "复制失败: " + e;
+            toast.className = 'toast toast__show';
+            setTimeout(function() {
+                toast.className = 'toast';
+                theClipboard.isAnimating = false;
+            }, 1800);
+        }
     });
 
     addEvent(jsonContent, "scroll", function(e) {
@@ -118,6 +124,10 @@
                 jsonResult.innerHTML = format(jsonContent.value);
                 break;
             case 'save':
+                if (!Blob) {
+                    alert('抱歉，您的浏览器不支持导出');
+                    return;
+                }
                 if (success) {
                     var result = JSON.stringify(JSON.parse(jsonContent.value), null, 4);
                     saveAs(new Blob([result], {
