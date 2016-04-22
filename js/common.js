@@ -31,6 +31,14 @@ function addEvent(target, type, func) {
     else target["on" + type] = func;
 }
 
+function removeEvent(target, type, func) {
+    if (target.removeEventListener) {
+        target.removeEventListener(type, func, false);
+    } else if(target.detachEvent) {
+        target.detachEvent('on' + type, func);
+    } else target['on' + type] = null;
+}
+
 function loadScript(url, callback) {
     "use strict";
     var scripts = document.getElementsByTagName('SCRIPT');
@@ -53,6 +61,16 @@ function loadScript(url, callback) {
         }
     }
 }
+
+function clearSlct() {
+    if("getSelection" in window) {
+        window.getSelection().removeAllRanges();
+    } else {
+        document.selection.empty();
+    }
+}
+
+
 
 // function deleEle(selectorList) {
 //     var i, j;

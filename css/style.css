@@ -22,6 +22,14 @@ body {
     -webkit-filter: none;
             filter: none; }
 
+.noselect {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  /* 以下两个属性目前并未支持，写在这里为了减少风险 */
+  -o-user-select: none;
+  user-select: none; }
+
 .toast {
   border-radius: 5px;
   padding: 10px 20px;

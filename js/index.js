@@ -95,15 +95,20 @@
         result.scrollTop = result.scrollHeight * scale;
     });
 
-    addEvent($(".divider")[0], "mousedown", function(e) {
-        document.body.onmousemove = function(e) {
-            var windowWidth = getViewportSize().width;
-            if (windowWidth - e.clientX > 70) {
-                $(".left")[0].style.width = (e.clientX / windowWidth) * 100 + "%";
-            }
-        };
-    });
+    var changeWidth = function(e) {
+        clearSlct();
+        var windowWidth = getViewportSize().width;
+        if (windowWidth - e.clientX > 70) {
+            $(".left")[0].style.width = (e.clientX / windowWidth) * 100 + "%";
+        }
+    };
 
+    addEvent($(".divider")[0], "mousedown", function(e) {
+        addEvent(document.body, 'mousemove', changeWidth);
+    });
+    addEvent(document.body, "mouseup", function() {
+        removeEvent(document.body, 'mousemove', changeWidth);
+    });
 
     addEvent($('.func')[0], 'click', function(e) {
         var e = e || window.event;
@@ -141,9 +146,7 @@
         }
     });
 
-    addEvent(document.body, "mouseup", function() {
-        document.body.onmousemove = null;
-    });
+
 
     addEvent($('#import_input'), 'change', function(e) {
         if (typeof FileReader === 'undefined') {
