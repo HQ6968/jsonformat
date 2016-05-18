@@ -6,6 +6,26 @@
  */
 function formatJson(jsonObj, indent) {
     "use strict";
+
+    if (!String.prototype.trim) {
+        String.prototype.trim = function() {
+            return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+        };
+    }
+
+    if (!Array.isArray) {
+        Array.isArray = function(arg) {
+            return Object.prototype.toString.call(arg) === '[object Array]';
+        };
+    }
+
+    var isObject = function(obj) {
+        if (!!obj && typeof obj === 'object' && Object.prototype.toString.call(obj) === '[object Object]') {
+            return true;
+        }
+        return false;
+    };
+
     var indentNum = indent || 4;
     var space = "";
     for (var i = 0; i < indentNum; i++) {
@@ -20,8 +40,8 @@ function formatJson(jsonObj, indent) {
                 _comma = ",";
             }
             var typeInfo = {
-                "json_object": "Object{...}" + _comma,
-                "json_array": "Array[" + (target.title || "...") + "]" + _comma
+                "json_object": " Object{" + (target.title || "...") + "}" + _comma,
+                "json_array": " Array[" + (target.title || "...") + "]" + _comma
             };
 
             var size = getElementSize(objcontent, "border");
@@ -77,9 +97,19 @@ function formatJson(jsonObj, indent) {
      * @return {string}           转换之后的html字符串
      */
     function parseObj(obj, indentNum, comma) {
-        var objstr = '<span class="btn-open" onclick="' + foldFuncName + '(this, ' + comma + ')"></span><span class="json_object">{<br/>';
-        var key, i = 0,
-            len = 0;
+        var key, len = 0,
+            i = 0;
+        var simple = ', simple';
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                len++;
+                if (isObject(obj[key]) || Array.isArray(obj[key])) {
+                    simple = ', not simple';
+                }
+            }
+        }
+        var objstr = '<span class="btn-open" onclick="' + foldFuncName + '(this, ' + comma + ')" title="' + len + simple + '"></span>' +
+            '<span class="json_object">{<br/>';
         var spacestr = "";
         var _comma = "";
         if (comma) {
@@ -89,11 +119,7 @@ function formatJson(jsonObj, indent) {
         for (var j = 0; j < indentNum; j++) {
             spacestr += space;
         }
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                len++;
-            }
-        }
+
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
                 i++;
@@ -112,7 +138,15 @@ function formatJson(jsonObj, indent) {
      * @return {string}           转换之后的html字符串
      */
     function parseArray(value, indentNum, comma) {
-        var arr = '<span class="btn-open" onclick="' + foldFuncName + '(this, ' + comma + ')" title="' + value.length + '"></span><span class="json_array">[<br/>';
+        var simple = ', simple';
+        for (var i = 0, len = value.length; i < len; i++) {
+            if (isObject(value[i]) || Array.isArray(value[i])) {
+                simple = ', not simple';
+                break;
+            }
+        }
+        var arr = '<span class="btn-open" onclick="' + foldFuncName + '(this, ' + comma + ')" title="' + value.length + simple + '"></span>' +
+            '<span class="json_array">[<br/>';
         var _comma = "";
         if (comma) {
             _comma = ",";
@@ -122,7 +156,7 @@ function formatJson(jsonObj, indent) {
             spacestr += space;
         }
         var add = false;
-        for (var i = 0; i < value.length; i++) {
+        for (i = 0, len = value.length; i < len; i++) {
             arr += spacestr + space + parseValue(value[i], indentNum + 1, i !== value.length - 1) + "<br/>";
         }
         return arr + spacestr + "]" + _comma + "</span>";
@@ -147,13 +181,14 @@ function formatJson(jsonObj, indent) {
         if (comma) {
             _comma = ",";
         }
-        var type = toString.call(value).replace(/^\[object ([a-zA-Z]+)\]$/, "$1");
+        var type = Object.prototype.toString.call(value).replace(/^\[object ([a-zA-Z]+)\]$/, "$1");
         var checkProtocol;
         switch (type) {
             case "String":
                 value = value.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-                checkProtocol = value.toLowerCase()
-                if (isUrl(value) && (checkProtocol.indexOf('http://') === 0 || checkProtocol.indexOf('https://') === 0)) {
+                checkProtocol = value.toLowerCase().trim();
+                // 修正一下，只有http://或者https://开头的并且符合url规则的才识别为链接
+                if (isUrl(checkProtocol) && /^https?:\/\/[\s\S]+/.test(checkProtocol)) {
                     value = '<a href="' + value + '" target="_blank">' + value + '</a>';
                 }
                 return '<span class="json_string">"' + value + '"</span>' + _comma;
@@ -252,4 +287,16 @@ function formatJson(jsonObj, indent) {
         }
         (document.getElementsByTagName("HEAD")[0] || document.documentElement).appendChild(styleNode);
     }
+}
+
+if (typeof exports === "object" && typeof module !== "undefined") {
+    module.exports = formatJson;
+} else if (typeof define === "function" && define.amd) {
+    define('formatJson', [], function() {
+        return formatJson;
+    });
+} else if (typeof define === "function" && define.cmd) {
+    define(function(require, exports, module) {
+        exports.formatJson = formatJson;
+    });
 }

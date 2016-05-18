@@ -1,14 +1,9 @@
+'use strict';
 function getViewportSize() {
     var size = {
         width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
         height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
     };
-    // if(size.width < document.body.clientWidth) {
-    //     size.width = document.body.clientWidth;
-    // }
-    // if(size.height < document.body.clientHeight) {
-    //     size.height = document.body.clientHeight;
-    // }
     return size;
 }
 
@@ -39,26 +34,45 @@ function removeEvent(target, type, func) {
     } else target['on' + type] = null;
 }
 
-function loadScript(url, callback) {
+function loadScript(url, callback, charset, crossorigin) {
     "use strict";
-    var scripts = document.getElementsByTagName('SCRIPT');
-    for (var i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === url) {
-            return;
-        }
+    if (typeof url !== 'string') {
+        throw new Error('invalid param:url at function-loadScript, must be string');
     }
 
-    var scriptTag = document.createElement('SCRIPT');
-    scriptTag.setAttribute("type", 'text/javascript');
-    scriptTag.src = url;
-    (document.getElementsByTagName('HEAD')[0] || document.documentElement).appendChild(scriptTag);
-    scriptTag.onload = scriptTag.onreadystatechange = function() { //Attach handlers for all browsers
-        if (! /*@cc_on!@*/ false || this.readyState === "loaded" || this.readyState === "complete") {
-            this.onload = this.onreadystatechange = null;
-            if (typeof(callback) === "function") {
-                callback();
+    var head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+    var baseElement = head.getElementsByTagName("base")[0],
+        currentlyAddingScript;
+
+    var node = document.createElement("script");
+    (typeof charset === 'string') && (node.charset = charset);
+    (typeof crossorigin === 'string') && node.setAttribute("crossorigin", crossorigin);
+
+    if ("onload" in node) {
+        node.onload = onload;
+        node.onerror = function() {
+            onload(true);
+            throw new Error('function loadScript:' + url + ' error!');
+        };
+    } else {
+        node.onreadystatechange = function() {
+            if (/loaded|complete/.test(node.readyState)) {
+                onload();
             }
-        }
+        };
+    }
+
+    node.async = true;
+    node.src = url;
+    currentlyAddingScript = node;
+    baseElement ? head.insertBefore(node, baseElement) : head.appendChild(node);
+    currentlyAddingScript = null;
+
+    function onload(error) {
+        node.onload = node.onerror = node.onreadystatechange = null;
+        head.removeChild(node);
+        node = null;
+        (typeof callback === 'function') && callback(error);
     }
 }
 
@@ -71,28 +85,3 @@ function clearSlct() {
 }
 
 
-
-// function deleEle(selectorList) {
-//     var i, j;
-//     var eles;
-//     var parent;
-//     for (i = 0; i < selectorList.length; i++) {
-//         eles = $(selectorList[i]);
-//         if (eles && eles.length) {
-//             while (eles.length && eles.length > 0) {
-//                 parent = eles[0].parentNode;
-//                 if (parent) {
-//                     parent.removeChild(eles[0]);
-//                 }
-//             }
-//         } else {
-//             if (eles) {
-//                 parent = eles.parentNode;
-//                 if(parent) {
-//                     parent.removeChild(eles);
-//                 }
-//             }
-//         }
-//     }
-// }
-// deleEle(["#googlead", ".jquery-api-top", "iframe"]);
