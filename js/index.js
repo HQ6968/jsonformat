@@ -17,7 +17,7 @@
 
   function isValidJson(str) {
     try {
-      eval('var jsonObj = ' + str);
+      var jsonObj = eval('(' + str + ')');
       if (typeof jsonObj === 'object') {
         return JSON.stringify(jsonObj);
       } else {
